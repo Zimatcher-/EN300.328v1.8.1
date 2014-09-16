@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Devices>
+  <SpectrumAnalyzer>
+    <ID>0</ID>
+    <Manufacturer>Rohde and Schwarz</Manufacturer>
+    <Model>FSU</Model>
+	<CentreFrequency>FREQ:CENT</CentreFrequency>
+	<StartFrequency>FREQ:STAR</StartFrequency>
+	<StopFrequency>FREQ:STOP</StopFrequency>
+  </SpectrumAnalyzer>
+  <SpectrumAnalyzer>
+    <ID>1</ID>
+    <Manufacturer>Rohde and Schwarz</Manufacturer>
+    <Model>FSQ-26</Model>
+	<CentreFrequency>FREQ:CENT</CentreFrequency>
+	<StartFrequency>FREQ:STAR</StartFrequency>
+	<StopFrequency>FREQ:STOP</StopFrequency>
+  </SpectrumAnalyzer>
+  <SpectrumAnalyzer>
+    <ID>2</ID>
+    <Manufacturer>Agilent</Manufacturer>
+    <Model>PXA</Model>
+	<CentreFrequency>FREQ:CENT</CentreFrequency>
+	<StartFrequency>FREQ:STAR</StartFrequency>
+	<StopFrequency>FREQ:STOP</StopFrequency>
+  </SpectrumAnalyzer>
+</Devices>
