@@ -2,29 +2,52 @@
 
 Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        testing()
+        defaultSettings()
     End Sub
-
+    Sub addCheckboxData() 'Add fields to the checkboxs on main screen
+        CheckedListBox1.Items.AddRange(GlobalVar.tests)
+        CheckedListBox2.Items.AddRange(GlobalVar.protocols)
+        CheckedListBox3.Items.AddRange(GlobalVar.temps)
+    End Sub
+    Sub defaultSettings() 'Fill in fields for testing
+        addCheckboxData()
+        TextBox1.Text = "2412"
+        TextBox2.Text = "2442"
+        TextBox3.Text = "2472"
+        TextBox4.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\Desktop\"
+        TextBox5.Text = "2400"
+        TextBox6.Text = "2483.5"
+        TextBox8.Text = "31.24"
+        TextBox9.Text = "31.16"
+        TextBox10.Text = "31.2"
+        CheckedListBox1.SetItemChecked(0, True)
+        CheckedListBox2.SetItemChecked(0, True)
+        CheckedListBox3.SetItemChecked(1, True)
+    End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click 'Start program button
         If CheckBoxes() Then
-            Dim bgwProgress As New BackgroundWorker
-            Dim frmProgress As ProgressBar
-            ProgressBar.Show(Me)
-            frmProgress = ProgressBar
-            ' here on the main thread FormP references the default instance, 
-            ' which it wouldn't from another thread.
-            AddHandler bgwProgress.DoWork, AddressOf BGW_DoWork
-            bgwProgress.RunWorkerAsync(New Object() {frmProgress})
+            If isConnectedGPIB() Then
+                If getTestTime() Then
+                    Dim bgwProgress As New BackgroundWorker
+                    Dim frmProgress As ProgressBar
+                    ProgressBar.Show(Me)
+                    frmProgress = ProgressBar
+                    ' here on the main thread FormP references the default instance, 
+                    ' which it wouldn't from another thread.
+                    AddHandler bgwProgress.DoWork, AddressOf BGW_DoWork
+                    bgwProgress.RunWorkerAsync(New Object() {frmProgress})
+                End If
+            Else
+                MsgBox("Please Connect GPIB to Analyzer")
+            End If
         End If
     End Sub
-
     Function CheckBoxes() 'Check if all fields have data in
         If Not TextBox1.Text.Equals("") Then
             If Not TextBox2.Text.Equals("") Then
                 If Not TextBox3.Text.Equals("") Then
                     If Not TextBox5.Text.Equals("") Then
                         If Not TextBox6.Text.Equals("") Then
-                            If Not TextBox7.Text.Equals("") Then
                                 If Not TextBox8.Text.Equals("") Then
                                     If Not TextBox9.Text.Equals("") Then
                                         If Not TextBox10.Text.Equals("") Then
@@ -69,10 +92,6 @@ Public Class Form1
                                     MsgBox("Please Enter Bottem Channel Offset")
                                     Return False
                                 End If
-                            Else
-                                MsgBox("Please Enter Com Port")
-                                Return False
-                            End If
                         Else
                             MsgBox("Please Enter Top Band Frequency")
                             Return False
@@ -94,55 +113,66 @@ Public Class Form1
             Return False
         End If
     End Function
-    Sub addCheckboxData() 'Add fields to the checkboxs on main screen
-        CheckedListBox1.Items.AddRange(GlobalVar.tests)
-        CheckedListBox2.Items.AddRange(GlobalVar.protocols)
-        CheckedListBox3.Items.AddRange(GlobalVar.temps)
-    End Sub
-    Sub testing() 'Fill in fields for testing
-        addCheckboxData()
-        TextBox1.Text = "2412"
-        TextBox2.Text = "2442"
-        TextBox3.Text = "2472"
-        TextBox4.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\Desktop\"
-        TextBox5.Text = "2400"
-        TextBox6.Text = "2483.5"
-        TextBox7.Text = "COM3"
-        TextBox8.Text = "31.24"
-        TextBox9.Text = "31.16"
-        TextBox10.Text = "31.2"
-        CheckedListBox1.SetItemChecked(0, True)
-        CheckedListBox2.SetItemChecked(0, True)
-        CheckedListBox3.SetItemChecked(1, True)
-    End Sub
+    
+
     Private Sub Browse_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim dialog As New FolderBrowserDialog
         If DialogResult.OK = dialog.ShowDialog Then
             TextBox4.Text = dialog.SelectedPath + "\"
         End If
     End Sub
+    Function getTestTime()
+        Dim psd = 0
+        Dim obw = 0
+        Dim obe = 0
+        If CheckedListBox1.GetItemChecked(0) Then
+            psd = CheckedListBox2.CheckedItems.Count * 3 * 135
+        End If
+        If CheckedListBox1.GetItemChecked(1) Then
+            obw = CheckedListBox2.CheckedItems.Count * 2 * 60
+        End If
+        If CheckedListBox1.GetItemChecked(2) Then
+            obe = (CheckedListBox2.CheckedItems.Count * 160 * 120) + 10
+        End If
 
+
+        Dim iSpan As TimeSpan = TimeSpan.FromSeconds(Convert.ToDecimal((obe + obw + psd) / 10))
+        Dim hours = iSpan.Hours.ToString.PadLeft(2, "0"c).ToString
+        Dim mins = iSpan.Minutes.ToString.PadLeft(2, "0"c).ToString
+        Dim secs = iSpan.Seconds.ToString.PadLeft(2, "0"c).ToString
+        Dim time As String = hours.ToString + "h" + mins.ToString + "m" + secs.ToString
+        If MessageBox.Show("This test will take " + time + "s" + vbNewLine + "Do you wish to continue ?", "TestTime", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
     Private Sub ComTest_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Sharp.startWifi(TextBox7.Text)
-        Sharp.setChannel("bottem", "802.11b")
-        Threading.Thread.Sleep(3000)
-        Sharp.setChannel("middle", "802.11b")
-        Threading.Thread.Sleep(3000)
-        Sharp.setChannel("top", "802.11b")
-        Threading.Thread.Sleep(3000)
-        Sharp.setChannel("bottem", "802.11g")
-        Threading.Thread.Sleep(3000)
-        Sharp.setChannel("middle", "802.11g")
-        Threading.Thread.Sleep(3000)
-        Sharp.setChannel("top", "802.11g")
-        Threading.Thread.Sleep(3000)
-        Sharp.setChannel("bottem", "802.11n")
-        Threading.Thread.Sleep(3000)
-        Sharp.setChannel("middle", "802.11n")
-        Threading.Thread.Sleep(3000)
-        Sharp.setChannel("top", "802.11n")
-        Threading.Thread.Sleep(3000)
-        Sharp.stopWifi(TextBox7.Text)
+        If Sharp.isSharpConnected() Then
+            Sharp.startWifi()
+            Sharp.setChannel("bottem", "802.11b")
+            Threading.Thread.Sleep(3000)
+            Sharp.setChannel("middle", "802.11b")
+            Threading.Thread.Sleep(3000)
+            Sharp.setChannel("top", "802.11b")
+            Threading.Thread.Sleep(3000)
+            Sharp.setChannel("bottem", "802.11g")
+            Threading.Thread.Sleep(3000)
+            Sharp.setChannel("middle", "802.11g")
+            Threading.Thread.Sleep(3000)
+            Sharp.setChannel("top", "802.11g")
+            Threading.Thread.Sleep(3000)
+            Sharp.setChannel("bottem", "802.11n")
+            Threading.Thread.Sleep(3000)
+            Sharp.setChannel("middle", "802.11n")
+            Threading.Thread.Sleep(3000)
+            Sharp.setChannel("top", "802.11n")
+            Threading.Thread.Sleep(3000)
+            Sharp.stopWifi()
+        Else
+            MsgBox("No device connected")
+        End If
+        
     End Sub
     Private Sub BGW_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs)
         Dim tempBool() As Boolean = {False, False, False}
@@ -150,6 +180,12 @@ Public Class Form1
         Dim frmProgress As ProgressBar
         'get the right instance of ProgressForm
         frmProgress = TryCast(e.Argument(0), ProgressBar)
+
+        If isSharpConnected() Then
+            GlobalVar.sharpConnected = True
+        Else
+            GlobalVar.sharpConnected = False
+        End If
 
         OpenGPIB()
 
@@ -162,9 +198,10 @@ Public Class Form1
                       End Sub)
         End If
 
-        Sharp.startWifi(TextBox7.Text)
+        If GlobalVar.sharpConnected Then
+            Sharp.startWifi()
+        End If
 
-        'If MessageBox.Show("This test will take " + tempTime.ToString + "s , Do you wish to continue ?", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
         If tempBool(0) Then
             runPowerSpectralDensity(Me, frmProgress)
         End If
@@ -176,7 +213,10 @@ Public Class Form1
         End If
 
 
-        Sharp.stopWifi(TextBox7.Text)
+        If GlobalVar.sharpConnected Then
+            Sharp.stopWifi()
+        End If
+
         MsgBox("Test Finished")
         frmProgress.CloseProgress_instanceSafe()
 

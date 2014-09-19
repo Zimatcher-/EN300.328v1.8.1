@@ -7,7 +7,7 @@
     End Sub
 
     Private Delegate Sub delegate_SetTimer(ByVal value As Boolean, ByVal max As Decimal, ByVal title As String)
-
+    'setting the timer enabled and also setting max time
     Public Sub SetTimer_instanceSafe(ByVal value As Boolean, ByVal max As Decimal, ByVal title As String)
         If Me.InvokeRequired Then
             Me.Invoke(New delegate_SetTimer(AddressOf Me.SetTimer_instanceSafe), value, max, title)
@@ -27,7 +27,7 @@
     End Sub
 
     Private Delegate Sub delegate_CloseProgress()
-
+    'closes the progressbar safely and exits the thread.
     Public Sub CloseProgress_instanceSafe()
         If Me.InvokeRequired Then
             Me.Invoke(New delegate_CloseProgress(AddressOf Me.CloseProgress_instanceSafe))
@@ -36,6 +36,7 @@
         End If
     End Sub
 
+
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         time = time + 1
         If time < maxTime Then
@@ -43,7 +44,7 @@
         Else
             remainTime = 0
         End If
-        System.Console.WriteLine(time)
+        'convert time to seconds, mins and hours.
         Dim iSpan As TimeSpan = TimeSpan.FromSeconds(Convert.ToDecimal(remainTime / 10))
         Dim hours = iSpan.Hours.ToString.PadLeft(2, "0"c).ToString
         Dim mins = iSpan.Minutes.ToString.PadLeft(2, "0"c).ToString
@@ -54,8 +55,13 @@
         mins = iSpan.Minutes.ToString.PadLeft(2, "0"c).ToString
         secs = iSpan.Seconds.ToString.PadLeft(2, "0"c).ToString
         Me.Label2.Text = ("Time Elapsed : " + hours + "h, " + mins + "m, " + secs + "s")
+        'change progressbar value and text every timer tick.
+        If Not time > Me.ProgressBar1.Value Then
+            Me.ProgressBar1.Value = Me.ProgressBar1.Maximum
+        Else
+            Me.ProgressBar1.Value = time
+        End If
 
-        Me.ProgressBar1.Value = time
         Me.Label1.Text = (FormatNumber(((time / maxTime) * 100), 0).ToString + "%")
     End Sub
 End Class

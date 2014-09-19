@@ -3,10 +3,30 @@
   <SpectrumAnalyzer>
     <ID>0</ID>
     <Manufacturer>Rohde and Schwarz</Manufacturer>
-    <Model>FSU</Model>
+    <Model>FSU-26</Model>
 	<CentreFrequency>FREQ:CENT</CentreFrequency>
 	<StartFrequency>FREQ:STAR</StartFrequency>
 	<StopFrequency>FREQ:STOP</StopFrequency>
+	<FrequencySpan>FREQ:SPAN</FrequencySpan>
+	<Attenuation>INP:ATT</Attenuation>
+	<Offset>DISP:TRAC:Y:RLEV:OFFS</Offset>
+	<ReferenceLevel>DISP:WIND:TRAC:Y:RLEV</ReferenceLevel>
+	<ResolutionBandwidth>BAND:AUTO OFF;BAND</ResolutionBandwidth>
+	<VideoBandwidth>BAND:VID:AUTO OFF;BAND:VID</VideoBandwidth>
+	<ContinuousSweep>INIT:CONT ON</ContinuousSweep>
+	<SingleSweep>INIT:CONT OFF</SingleSweep>
+	<SweepTime>SWE:TIME</SweepTime>
+	<SweepCount>SWE:COUN</SweepCount>
+	<SweepPoints>SWE:POIN</SweepPoints>
+	<TraceType>DISP:WIND:TRAC:MODE</TraceType>
+	<DetectorType>DET</DetectorType>
+	<FreeRun>TRIG:SOUR IMM</FreeRun>
+	<Filter>SENS:BAND:RES:TYPE</Filter>
+	<TimeDomainPower>CALC:MARK:FUNC:SUMM:RMS ON</TimeDomainPower>
+	<OccupiedBandwidth>CALC:MARK:FUNC:POW:SEL OBW</OccupiedBandwidth>
+	<Marker1Peak>CALC:MARK1:MAX</Marker1Peak>
+	<Preset>SYST:PRES</Preset>
+	<StartMessurment>INIT</StartMessurment>
   </SpectrumAnalyzer>
   <SpectrumAnalyzer>
     <ID>1</ID>
@@ -15,6 +35,26 @@
 	<CentreFrequency>FREQ:CENT</CentreFrequency>
 	<StartFrequency>FREQ:STAR</StartFrequency>
 	<StopFrequency>FREQ:STOP</StopFrequency>
+	<FrequencySpan>FREQ:SPAN</FrequencySpan>
+	<Attenuation>INP:ATT</Attenuation>
+	<Offset>DISP:TRAC:Y:RLEV:OFFS</Offset>
+	<ReferenceLevel>DISP:WIND:TRAC:Y:RLEV</ReferenceLevel>
+	<ResolutionBandwidth>BAND:AUTO OFF;BAND</ResolutionBandwidth>
+	<VideoBandwidth>BAND:VID:AUTO OFF;BAND:VID</VideoBandwidth>
+	<ContinuousSweep>INIT:CONT ON</ContinuousSweep>
+	<SingleSweep>INIT:CONT OFF</SingleSweep>
+	<SweepTime>SWE:TIME</SweepTime>
+	<SweepCount>SWE:COUN</SweepCount>
+	<SweepPoints>SWE:POIN</SweepPoints>
+	<TraceType>DISP:WIND:TRAC:MODE</TraceType>
+	<DetectorType>DET</DetectorType>
+	<FreeRun>TRIG:SOUR IMM</FreeRun>
+	<Filter>SENS:BAND:RES:TYPE</Filter>
+	<TimeDomainPower>CALC:MARK:FUNC:SUMM:RMS ON</TimeDomainPower>
+	<OccupiedBandwidth>CALC:MARK:FUNC:POW:SEL OBW</OccupiedBandwidth>
+	<Marker1Peak>CALC:MARK1:MAX</Marker1Peak>
+	<Preset>SYST:PRES</Preset>
+	<StartMessurment>INIT</StartMessurment>
   </SpectrumAnalyzer>
   <SpectrumAnalyzer>
     <ID>2</ID>

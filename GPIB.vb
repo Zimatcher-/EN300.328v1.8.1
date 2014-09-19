@@ -1,11 +1,13 @@
 ﻿Imports Ivi.Visa.Interop
 Imports System.Xml
 Imports System.IO
+Imports System.Management
 
 Module GPIB
     Public node As XmlNode
     Public device As String = ""
     Public GPIB_DeviceName As String()
+    Dim name()
     Dim doc As XmlDocument = New XmlDocument()
     Dim ioMgr As New ResourceManager
     Dim instrument As New FormattedIO488
@@ -15,6 +17,28 @@ Module GPIB
         doc.Load(GlobalVar.commandsLocXML)
         node = doc.DocumentElement()
     End Sub
+    Function isConnectedGPIB()
+        Dim x = 0
+        Try
+            Dim searcher As New ManagementObjectSearcher( _
+            "SELECT * FROM Win32_PnpEntity")
+
+            For Each info As ManagementObject In searcher.Get()
+                ReDim Preserve name(0 To x)
+                name(x) = CType(info("Caption"), String)
+                'System.Console.WriteLine(name(x))
+                x = x + 1
+            Next
+        Catch err As ManagementException
+            MsgBox("An error occurred while querying for WMI data: ")
+        End Try
+        If name.Contains("GPIB-USB-B") Then
+            System.Console.WriteLine("Found : GPIB-USB-B")
+            Return True
+        Else
+            Return False
+        End If
+    End Function
     Sub OpenGPIB()
         loadCommandsDoc()
         Dim temp As String()
@@ -54,68 +78,67 @@ Module GPIB
         instrument.WriteString(GlobalVar.commands(4) + " " + freq)
     End Sub
     Sub setStopFreq(freq As String)
-        If device.Equals("FSQ-26") Then
-            instrument.WriteString(GlobalVar.commands(5) + " " + freq)
-        End If
+        instrument.WriteString(GlobalVar.commands(5) + " " + freq)
     End Sub
     Sub setFreqSpan(freq As String)
-            instrument.WriteString(GlobalVar.commands(6) + " " + freq)
+        instrument.WriteString(GlobalVar.commands(6) + " " + freq)
     End Sub
-    
+
     Sub setRfAtt(att As String)
-            instrument.WriteString(GlobalVar.commands(7) + " " + att) '10 DB
+        instrument.WriteString(GlobalVar.commands(7) + " " + att) '10 DB
     End Sub
     Sub setOffset(offset As String)
         instrument.WriteString(GlobalVar.commands(8) + " " + offset) '10dB
     End Sub
     Sub setRefLvl(refLvl As String)
-            instrument.WriteString(GlobalVar.commands(9) + " " + refLvl) '10dBm
+        instrument.WriteString(GlobalVar.commands(9) + " " + refLvl) '10dBm
     End Sub
     Sub setResBand(resBand As String)
         If GlobalVar.commands(10).Contains(";") Then
             Dim temp = GlobalVar.commands(10).Split(";")
             instrument.WriteString(temp(0))
-            instrument.WriteString(temp(1))
+            instrument.WriteString(temp(1) + " " + resBand)
         Else
             instrument.WriteString(GlobalVar.commands(10))
         End If
-        
+
     End Sub
     Sub setVidBand(vidBand As String)
         If GlobalVar.commands(11).Contains(";") Then
-            Dim temp = GlobalVar.commands(10).Split(";")
+            Dim temp = GlobalVar.commands(11).Split(";")
             instrument.WriteString(temp(0))
-            instrument.WriteString(temp(1))
+            instrument.WriteString(temp(1) + " " + vidBand)
+
         Else
             instrument.WriteString(GlobalVar.commands(11))
         End If
     End Sub
     Sub setContinuousSweep()
-            instrument.WriteString(GlobalVar.commands(12))
+        instrument.WriteString(GlobalVar.commands(12))
     End Sub
     Sub setSingleSweep()
-            instrument.WriteString(GlobalVar.commands(13))
+        instrument.WriteString(GlobalVar.commands(13))
     End Sub
     Sub setSweepTime(time As String)
-            instrument.WriteString(GlobalVar.commands(14) + " " + time)
+        instrument.WriteString(GlobalVar.commands(14) + " " + time)
     End Sub
     Sub setSweepCount(sweCount As String)
-            instrument.WriteString(GlobalVar.commands(15) + " " + sweCount) ' 1 
+        instrument.WriteString(GlobalVar.commands(15) + " " + sweCount) ' 1 
     End Sub
     Sub setSweepPoints(swePoints As String)
-            instrument.WriteString(GlobalVar.commands(16) + " " + swePoints) ' 1 
+        instrument.WriteString(GlobalVar.commands(16) + " " + swePoints) ' 1 
     End Sub
     Sub setTraceType(type As String)
-            instrument.WriteString(GlobalVar.commands(17) + " " + type)
+        instrument.WriteString(GlobalVar.commands(17) + " " + type)
     End Sub
     Sub setDetectorType(detector As String)
-            instrument.WriteString(GlobalVar.commands(18) + " " + detector)
+        instrument.WriteString(GlobalVar.commands(18) + " " + detector)
     End Sub
     Sub setFreeRun()
-            instrument.WriteString(GlobalVar.commands(19))
+        instrument.WriteString(GlobalVar.commands(19))
     End Sub
     Sub setFilter(filter)
-            instrument.WriteString(GlobalVar.commands(20) + " " + filter)
+        instrument.WriteString(GlobalVar.commands(20) + " " + filter)
     End Sub
     Sub setTimeDomPower()
         instrument.WriteString(GlobalVar.commands(21))
@@ -151,16 +174,25 @@ Module GPIB
             instrument.WriteString("HCOP:IMM")
             instrument.WriteString("FORM UINT,8")
             instrument.WriteString("MMEM:DATA? 'D:\temp.WMF'")
-        ElseIf device.Equals("FSU") Then
+        ElseIf device.Equals("FSU-26") Then
+            instrument.WriteString("HCOP:DEV:LANG WMF")
+            instrument.WriteString("HCOP:DEST 'MMEM'")
+            instrument.WriteString("MMEM:NAME 'D:\temp.WMF'")
+            instrument.WriteString("HCOP:ITEM:ALL")
+            instrument.WriteString("HCOP:IMM")
+            instrument.WriteString("FORM UINT,8")
+            instrument.WriteString("MMEM:DATA? 'D:\temp.WMF'")
             'Implement FSU Screenshot
         ElseIf device.Equals("PXA") Then
             instrument.WriteString("MMEM:STOR:SCR 'D:\temp.WMF'")
             instrument.WriteString("MMEM:DATA? 'D:\temp.WMF'")
         End If
 
+        GPIB.instrument.IO.Timeout = 6000
         'Store GPIB data into byte array
         Dim BlockData As Byte() = instrument.ReadIEEEBlock(IEEEBinaryType.BinaryType_UI1, False, True)
         'Try writing byte array to file if cant error
+        GPIB.instrument.IO.Timeout = 2000
         Try
             File.WriteAllBytes(fullPath, BlockData)
             System.Console.WriteLine("Saved Screenshot in " + fullPath)
@@ -185,7 +217,10 @@ Module GPIB
             instrument.WriteString("FORM UINT,8")
             instrument.WriteString("MMEM:DATA? 'D:\test.DAT'")
         ElseIf device.Equals("FSU") Then
-            'Implement FSU Screenshot
+            instrument.WriteString("HCOP:DEST 'MMEM'")
+            instrument.WriteString("MMEM:STOR:TRAC 1, 'D:\test.DAT'")
+            instrument.WriteString("FORM UINT,8")
+            instrument.WriteString("MMEM:DATA? 'D:\test.DAT'")
         ElseIf device.Equals("PXA") Then
             instrument.WriteString("MMEM:STOR:SCR 'D:\temp.DAT'")
             instrument.WriteString("MMEM:DATA? 'D:\temp.DAT'")

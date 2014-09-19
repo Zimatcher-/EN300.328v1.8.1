@@ -43,7 +43,6 @@ Partial Class Form1
         Me.Label10 = New System.Windows.Forms.Label()
         Me.TextBox6 = New System.Windows.Forms.TextBox()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.TextBox8 = New System.Windows.Forms.TextBox()
         Me.TextBox9 = New System.Windows.Forms.TextBox()
@@ -225,16 +224,9 @@ Partial Class Form1
         Me.Button2.Text = "Browse"
         Me.Button2.UseVisualStyleBackColor = True
         '
-        'TextBox7
-        '
-        Me.TextBox7.Location = New System.Drawing.Point(12, 295)
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(37, 20)
-        Me.TextBox7.TabIndex = 25
-        '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(55, 293)
+        Me.Button3.Location = New System.Drawing.Point(12, 295)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(75, 23)
         Me.Button3.TabIndex = 26
@@ -281,7 +273,6 @@ Partial Class Form1
         Me.Controls.Add(Me.TextBox9)
         Me.Controls.Add(Me.TextBox8)
         Me.Controls.Add(Me.Button3)
-        Me.Controls.Add(Me.TextBox7)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.TextBox6)
         Me.Controls.Add(Me.Label10)
@@ -331,7 +322,6 @@ Partial Class Form1
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents TextBox6 As System.Windows.Forms.TextBox
     Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents TextBox7 As System.Windows.Forms.TextBox
     Friend WithEvents Button3 As System.Windows.Forms.Button
     Friend WithEvents TextBox8 As System.Windows.Forms.TextBox
     Friend WithEvents TextBox9 As System.Windows.Forms.TextBox

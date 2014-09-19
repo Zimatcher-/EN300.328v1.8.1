@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Commands>
+    <start>WTFD 1</start>
+    <bBottom>WIDL;WBTX2 001021150000020</bBottom>
+    <bMiddle>WIDL;WBTX2 007021150000020</bMiddle>
+    <bTop>WIDL;WBTX2 013021150000020</bTop>
+    <gBottom>WIDL;WBTX2 001041200000020</gBottom>
+    <gMiddle>WIDL;WBTX2 007041200000020</gMiddle>
+    <gTop>WIDL;WBTX2 013041200000020</gTop>
+    <nBottom>WIDL;WBTX2 001121200000020</nBottom>
+    <nMiddle>WIDL;WBTX2 007121200000020</nMiddle>
+    <nTop>WIDL;WBTX2 013121200000020</nTop>
+    <stop>WTFD 0</stop>
+</Commands>

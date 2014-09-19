@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EN300.328v1.8.1.exe" size="64000">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EN300.328v1.8.1.exe" size="66560">
       <assemblyIdentity name="EN300.328v1.8.1" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>zAcCYYl+NToTmiqW8q2sRtHdAuk=</dsig:DigestValue>
+        <dsig:DigestValue>gQxdiR3yqfGocvHjuT7RiUcQQpA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,13 +62,22 @@
       <dsig:DigestValue>TVvkcemmNOFdln2Sfoi3ZKy/Swo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="spectrumAnalyzerCommands.xml" size="873" writeableType="applicationData">
+  <file name="sharpCommands.xml" size="557" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>5CCkunhtmsEwWhS0oSSF16CMpgQ=</dsig:DigestValue>
+      <dsig:DigestValue>OZI9Im2dj4VZ0WOjRztdPYh9FTA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="spectrumAnalyzerCommands.xml" size="874" writeableType="applicationData">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>8k+p6ZZyE10T1PkhiDldIINaHBc=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

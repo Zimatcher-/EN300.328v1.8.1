@@ -13,7 +13,9 @@
     Public obw As String() = {"2412MHz", "2472MHz", "40Mhz", "20dBm", "5 DB", "500 KHz", "2 MHz", "10ms", "625", "100", "RMS", "MAXH"}
     'PSD TEST FIELDS = {bottemCentre, topCentre, Span, ref, attenuation, ResBandWidth, VidBandWidth, SweepTime, SweepPoints, SweepCount, Detector, Trace}
     Public commands As String()
-    'Public commandsLocXML As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\Desktop\spectrumAnalyzerCommands.XML"
     Public commandsLocXML As String = "spectrumAnalyzerCommands.XML"
+    Public sharpConnected As Boolean = False
+    Public sharpCommands As String()
+    Public sharpCommandsLocXML As String = "sharpCommands.XML"
 
 End Module

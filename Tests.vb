@@ -5,27 +5,45 @@ Module Tests
     Sub runPowerSpectralDensity(form As Form1, progressBarForm As ProgressBar)
         preset()
         Dim maxPer As Integer = form.CheckedListBox2.CheckedItems.Count * 3
-        progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 135), "Power Spectral Density")
+
         Dim tempLocation As String
+        If GlobalVar.sharpConnected Then
+            MsgBox("Please make sure device is at Ambient")
+        End If
         For i = 0 To form.CheckedListBox2.Items.Count - 1 Step 1
             If form.CheckedListBox2.GetItemChecked(i) = True Then
                 tempLocation = (GlobalVar.location + "EN 300 328 v1.8.1 (WLAN)\" + form.CheckedListBox2.Items(i).ToString + "\Power Spectral Density\")
-                'MsgBox("Set device to channel frequency " + GlobalVar.freq(0) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                Sharp.setChannel("bottem", form.CheckedListBox2.Items(i).ToString)
+                If GlobalVar.sharpConnected Then
+                    Sharp.setChannel("bottem", form.CheckedListBox2.Items(i).ToString)
+                Else
+                    MsgBox("Set device to channel frequency " + GlobalVar.freq(0) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
+                End If
                 GlobalVar.offset = form.TextBox8.Text + "dB"
                 Threading.Thread.Sleep(500)
                 'Threading.Thread.Sleep(10000)
+                progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 135), "Power Spectral Density")
                 psdReading(GlobalVar.freq(0), form.CheckedListBox2.CheckedItems.Item(i).ToString, tempLocation)
-                'MsgBox("Set device to channel frequency " + GlobalVar.freq(1) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                Sharp.setChannel("middle", form.CheckedListBox2.Items(i).ToString)
+                progressBarForm.SetTimer_instanceSafe(False, ((maxPer) * 135), "Power Spectral Density")
+                If GlobalVar.sharpConnected Then
+                    Sharp.setChannel("middle", form.CheckedListBox2.Items(i).ToString)
+                Else
+                    MsgBox("Set device to channel frequency " + GlobalVar.freq(1) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
+                End If
                 GlobalVar.offset = form.TextBox9.Text + "dB"
                 'Threading.Thread.Sleep(10000)
+                progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 135), "Power Spectral Density")
                 psdReading(GlobalVar.freq(1), form.CheckedListBox2.CheckedItems.Item(i).ToString, tempLocation)
-                'MsgBox("Set device to channel frequency " + GlobalVar.freq(2) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                Sharp.setChannel("top", form.CheckedListBox2.Items(i).ToString)
+                progressBarForm.SetTimer_instanceSafe(False, ((maxPer) * 135), "Power Spectral Density")
+                If GlobalVar.sharpConnected Then
+                    Sharp.setChannel("top", form.CheckedListBox2.Items(i).ToString)
+                Else
+                    MsgBox("Set device to channel frequency " + GlobalVar.freq(2) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
+                End If
                 GlobalVar.offset = form.TextBox10.Text + "dB"
                 'Threading.Thread.Sleep(10000)
+                progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 135), "Power Spectral Density")
                 psdReading(GlobalVar.freq(2), form.CheckedListBox2.CheckedItems.Item(i).ToString, tempLocation)
+                progressBarForm.SetTimer_instanceSafe(False, ((maxPer) * 135), "Power Spectral Density")
             End If
         Next
         progressBarForm.SetTimer_instanceSafe(False, 0, "Power Spectral Density")
@@ -53,24 +71,33 @@ Module Tests
     Sub runOutBandEmmisions(form As Form1, progressBarForm As ProgressBar)
         preset()
         Dim maxPer As Integer = form.CheckedListBox2.CheckedItems.Count * 160
-        progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 120) + 10, "Out Band Emissions")
         Dim tempLocation As String = ""
         For i = 0 To form.CheckedListBox2.Items.Count - 1 Step 1
             If form.CheckedListBox2.GetItemChecked(i) Then
                 For y = 0 To form.CheckedListBox3.Items.Count - 1 Step 1
                     If form.CheckedListBox3.GetItemChecked(y) Then
+                        If GlobalVar.sharpConnected Then
+                            MsgBox("Please set Temperature to " + form.CheckedListBox3.Items(y).ToString)
+                        End If
                         For j = 0 To 1 Step 1
                             If j = 0 Then
-                                'MsgBox("Set device to channel frequency " + GlobalVar.freq(0) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString + " at " + form.CheckedListBox3.Items(y).ToString + " Degrees")
-                                Sharp.setChannel("bottem", form.CheckedListBox2.Items(i).ToString)
+                                If GlobalVar.sharpConnected Then
+                                    Sharp.setChannel("bottem", form.CheckedListBox2.Items(i).ToString)
+                                Else
+                                    MsgBox("Set device to channel frequency " + GlobalVar.freq(0) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString + " and " + vbNewLine + "set temperture to " + form.CheckedListBox3.Items(y).ToString)
+                                End If
                                 GlobalVar.offset = form.TextBox8.Text + "dB"
                                 tempLocation = (GlobalVar.location + "EN 300 328 v1.8.1 (WLAN)\" + form.CheckedListBox2.Items(i).ToString + "\Out Band Emission\" + form.CheckedListBox3.Items(y).ToString + "\" + "Bottem Channel (" + form.TextBox1.Text + "MHz)\")
                             ElseIf j = 1 Then
-                                'MsgBox("Set device to channel frequency " + GlobalVar.freq(2) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString + " at " + form.CheckedListBox3.Items(y).ToString + " Degrees")
-                                Sharp.setChannel("top", form.CheckedListBox2.Items(i).ToString)
+                                If GlobalVar.sharpConnected Then
+                                    Sharp.setChannel("top", form.CheckedListBox2.Items(i).ToString)
+                                Else
+                                    MsgBox("Set device to channel frequency " + GlobalVar.freq(2) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString + " and " + vbNewLine + "set temperture to " + form.CheckedListBox3.Items(y).ToString)
+                                End If
                                 GlobalVar.offset = form.TextBox10.Text + "dB"
                                 tempLocation = (GlobalVar.location + "EN 300 328 v1.8.1 (WLAN)\" + form.CheckedListBox2.Items(i).ToString + "\Out Band Emission\" + form.CheckedListBox3.Items(y).ToString + "\" + "Top Channel (" + form.TextBox3.Text + "MHz)\")
                             End If
+                            progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 120) + 10, "Out Band Emissions")
                             For k = 0 To 39 Step 1
                                 'System.Console.WriteLine((Convert.ToDecimal(GlobalVar.obe(0)) - (k * 1)).ToString)
                                 obeReading((Convert.ToDecimal(GlobalVar.obe(0)) - (k * 1)).ToString, form.CheckedListBox2.Items(i).ToString, tempLocation)
@@ -81,6 +108,7 @@ Module Tests
                                 obeReading((Convert.ToDecimal(GlobalVar.obe(1)) + (x * 1)).ToString, form.CheckedListBox2.Items(i).ToString, tempLocation)
                                 'Threading.Thread.Sleep(500)
                             Next
+                            progressBarForm.SetTimer_instanceSafe(False, ((maxPer) * 120) + 10, "Out Band Emissions")
                         Next
                     End If
                 Next
@@ -114,27 +142,40 @@ Module Tests
     Sub runOccupiedBandwidth(form As Form1, progressBarForm As ProgressBar)
         preset()
         Dim maxPer As Integer = form.CheckedListBox2.CheckedItems.Count * 2
-        progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 60), "Occupied Bandwidth")
+
         Dim progValue = 0
         Dim tempLocation As String = ""
+        If GlobalVar.sharpConnected Then
+            MsgBox("Please make sure device is at Ambient")
+        End If
         For i = 0 To form.CheckedListBox2.Items.Count - 1 Step 1
             If form.CheckedListBox2.GetItemChecked(i) Then
                 tempLocation = (GlobalVar.location + "EN 300 328 v1.8.1 (WLAN)\" + form.CheckedListBox2.Items(i).ToString + "\Occupied Bandwidth\")
                 For j = 0 To 1 Step 1
                     If j = 0 Then
-                        'MsgBox("Set device to channel frequency " + GlobalVar.freq(0) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                        Sharp.setChannel("bottem", form.CheckedListBox2.Items(i).ToString)
+                        If GlobalVar.sharpConnected Then
+                            Sharp.setChannel("bottem", form.CheckedListBox2.Items(i).ToString)
+                        Else
+                            MsgBox("Set device to channel frequency " + GlobalVar.freq(0) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
+                        End If
+                        progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 60), "Occupied Bandwidth")
                         GlobalVar.offset = form.TextBox8.Text + "dB"
                         Threading.Thread.Sleep(500)
                         'Threading.Thread.Sleep(2000)
                         obwReading(GlobalVar.freq(0), form.CheckedListBox2.Items(i).ToString, tempLocation)
+                        progressBarForm.SetTimer_instanceSafe(False, ((maxPer) * 60), "Occupied Bandwidth")
                     ElseIf j = 1 Then
-                        'MsgBox("Set device to channel frequency " + GlobalVar.freq(2) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                        Sharp.setChannel("top", form.CheckedListBox2.Items(i).ToString)
+                        If GlobalVar.sharpConnected Then
+                            Sharp.setChannel("top", form.CheckedListBox2.Items(i).ToString)
+                        Else
+                            MsgBox("Set device to channel frequency " + GlobalVar.freq(2) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
+                        End If
+                        progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 60), "Occupied Bandwidth")
                         GlobalVar.offset = form.TextBox10.Text + "dB"
                         Threading.Thread.Sleep(500)
                         'Threading.Thread.Sleep(2000)
                         obwReading(GlobalVar.freq(2), form.CheckedListBox2.Items(i).ToString, tempLocation)
+                        progressBarForm.SetTimer_instanceSafe(False, ((maxPer) * 60), "Occupied Bandwidth")
                     End If
 
                 Next
