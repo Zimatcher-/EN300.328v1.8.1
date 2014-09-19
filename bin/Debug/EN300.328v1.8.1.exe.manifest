@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EN300.328v1.8.1.exe" size="66560">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EN300.328v1.8.1.exe" size="65536">
       <assemblyIdentity name="EN300.328v1.8.1" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>gQxdiR3yqfGocvHjuT7RiUcQQpA=</dsig:DigestValue>
+        <dsig:DigestValue>Ae8v52o62OUqb4SPC56qq7yH12I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

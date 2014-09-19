@@ -26,6 +26,16 @@
         End If
     End Sub
 
+    Private Delegate Sub delegate_PauseTimer()
+    'setting the timer enabled and also setting max time
+    Public Sub PauseTimer_instanceSafe()
+        If Me.InvokeRequired Then
+            Me.Invoke(New delegate_PauseTimer(AddressOf Me.PauseTimer_instanceSafe))
+        Else
+            Timer1.Enabled = Not Timer1.Enabled
+        End If
+    End Sub
+
     Private Delegate Sub delegate_CloseProgress()
     'closes the progressbar safely and exits the thread.
     Public Sub CloseProgress_instanceSafe()

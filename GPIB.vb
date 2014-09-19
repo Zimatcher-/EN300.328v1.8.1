@@ -216,7 +216,7 @@ Module GPIB
             instrument.WriteString("MMEM:STOR:TRAC 1, 'D:\test.DAT'")
             instrument.WriteString("FORM UINT,8")
             instrument.WriteString("MMEM:DATA? 'D:\test.DAT'")
-        ElseIf device.Equals("FSU") Then
+        ElseIf device.Equals("FSU-26") Then
             instrument.WriteString("HCOP:DEST 'MMEM'")
             instrument.WriteString("MMEM:STOR:TRAC 1, 'D:\test.DAT'")
             instrument.WriteString("FORM UINT,8")

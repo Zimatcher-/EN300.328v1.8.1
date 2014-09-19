@@ -4,8 +4,7 @@
     Public tests As String() = {"Power Spectral Density", "Occupied Bandwidth", "Out Band Emissions"}
     Public protocols As String() = {"802.11b", "802.11g", "802.11n"}
     Public temps As String() = {"-10", "Ambient", "+55"}
-    Public jobNo As String = ""
-    Public offset As String = "31.2dB"
+    Public offset As String = "21.2dB"
     Public psd As String() = {"2400MHz", "2483.5MHz", "10dBm", "5 DB", "10 KHz", "30 KHz", "10S", "30001", "RMS", "MAXH"}
     'PSD TEST FIELDS = {start, stop, ref, attenuation, offset, ResBandWidth, VidBandWidth, SweepTime, SweepPoints, Detector, Trace}
     Public obe As String() = {"2399.5", "2484", "0Hz", "10dBm", "5 DB", "1 MHz", "3 MHz", "20ms", "5000", "100", "RMS", "MAXH", "CFIL"}

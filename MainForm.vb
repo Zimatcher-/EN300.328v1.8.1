@@ -21,7 +21,7 @@ Public Class Form1
         TextBox9.Text = "31.16"
         TextBox10.Text = "31.2"
         CheckedListBox1.SetItemChecked(0, True)
-        CheckedListBox2.SetItemChecked(0, True)
+        'CheckedListBox2.SetItemChecked(0, True)
         CheckedListBox3.SetItemChecked(1, True)
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click 'Start program button
@@ -132,7 +132,7 @@ Public Class Form1
             obw = CheckedListBox2.CheckedItems.Count * 2 * 60
         End If
         If CheckedListBox1.GetItemChecked(2) Then
-            obe = (CheckedListBox2.CheckedItems.Count * 160 * 120) + 10
+            obe = (CheckedListBox2.CheckedItems.Count * 160 * 120) - 5540
         End If
 
 
