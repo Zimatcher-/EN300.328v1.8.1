@@ -203,21 +203,27 @@ Public Class Form1
 
         If GlobalVar.sharpConnected Then
             Sharp.startWifi()
-        End If
-
-        If tempBool(0) Then
-            runPowerSpectralDensity(Me, frmProgress)
-        End If
-        If tempBool(1) Then
-            runOccupiedBandwidth(Me, frmProgress)
-        End If
-        If tempBool(2) Then
-            runOutBandEmmisions(Me, frmProgress)
-        End If
-
-
-        If GlobalVar.sharpConnected Then
+            If tempBool(0) Then
+                runPowerSpectralDensity(Me, frmProgress)
+            End If
+            If tempBool(1) Then
+                runOccupiedBandwidth(Me, frmProgress)
+            End If
+            If tempBool(2) Then
+                runOutBandEmmisions(Me, frmProgress)
+            End If
             Sharp.stopWifi()
+        Else
+            If tempBool(0) Then
+                runPowerSpectralDensityMan(Me, frmProgress)
+            End If
+            If tempBool(1) Then
+                runOccupiedBandwidthMan(Me, frmProgress)
+            End If
+            If tempBool(2) Then
+                runOutBandEmmisionsMan(Me, frmProgress)
+            End If
+
         End If
 
         MsgBox("Test Finished")

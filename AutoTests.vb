@@ -1,6 +1,6 @@
 ﻿Imports System.Threading
 Imports System.ComponentModel
-Module Tests
+Module AutoTests
     Sub runPowerSpectralDensity(form As Form1, progressBarForm As ProgressBar)
         preset()
         Dim maxPer As Integer = form.CheckedListBox2.CheckedItems.Count * 3

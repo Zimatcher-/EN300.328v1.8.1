@@ -103,6 +103,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ManualTests.vb" />
     <Compile Include="GlobalVar.vb" />
     <Compile Include="GPIB.vb" />
     <Compile Include="MainForm.vb">
@@ -135,7 +136,7 @@
     </Compile>
     <Compile Include="Serial.vb" />
     <Compile Include="Sharp.vb" />
-    <Compile Include="Tests.vb" />
+    <Compile Include="AutoTests.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
