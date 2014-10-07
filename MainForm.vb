@@ -17,12 +17,9 @@ Public Class Form1
         TextBox4.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\Desktop\"
         TextBox5.Text = "2400"
         TextBox6.Text = "2483.5"
-        TextBox8.Text = "31.24"
-        TextBox9.Text = "31.16"
-        TextBox10.Text = "31.2"
-        CheckedListBox1.SetItemChecked(0, True)
+        'CheckedListBox1.SetItemChecked(0, True)
         'CheckedListBox2.SetItemChecked(0, True)
-        CheckedListBox3.SetItemChecked(1, True)
+        'CheckedListBox3.SetItemChecked(1, True)
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click 'Start program button
         If CheckBoxes() Then
@@ -48,50 +45,56 @@ Public Class Form1
                 If Not TextBox3.Text.Equals("") Then
                     If Not TextBox5.Text.Equals("") Then
                         If Not TextBox6.Text.Equals("") Then
-                                If Not TextBox8.Text.Equals("") Then
-                                    If Not TextBox9.Text.Equals("") Then
-                                        If Not TextBox10.Text.Equals("") Then
-                                            If Not CheckedListBox1.CheckedItems.Count = 0 Then
-                                                If Not CheckedListBox2.CheckedItems.Count = 0 Then
-                                                    If Not CheckedListBox3.CheckedItems.Count = 0 Then
-                                                        If Not TextBox4.Text.Equals("") Then
-                                                            GlobalVar.freq(0) = TextBox1.Text
-                                                            GlobalVar.freq(1) = TextBox2.Text
-                                                            GlobalVar.freq(2) = TextBox3.Text
-                                                            GlobalVar.location = TextBox4.Text
-                                                            GlobalVar.psd(0) = TextBox5.Text + "MHz"
-                                                            GlobalVar.psd(1) = TextBox6.Text + "MHz"
-                                                            GlobalVar.obe(0) = (Convert.ToDecimal(TextBox5.Text) - 0.5).ToString
-                                                            GlobalVar.obe(1) = (Convert.ToDecimal(TextBox6.Text) + 0.5).ToString
-                                                            Return True
-                                                        Else
-                                                            MsgBox("Please Enter SaveLocation")
-                                                            Return False
-                                                        End If
+                            If Not TextBox8.Text.Equals("") Then
+                                If Not TextBox9.Text.Equals("") Then
+                                    If Not TextBox10.Text.Equals("") Then
+                                        If Not CheckedListBox1.CheckedItems.Count = 0 Then
+                                            If Not CheckedListBox2.CheckedItems.Count = 0 Then
+                                                If Not CheckedListBox3.CheckedItems.Count = 0 Then
+                                                    If Not TextBox4.Text.Equals("") Then
+
+                                                        GlobalVar.freq(0) = TextBox1.Text
+                                                        GlobalVar.freq(1) = TextBox2.Text
+                                                        GlobalVar.freq(2) = TextBox3.Text
+                                                        GlobalVar.location = TextBox4.Text
+                                                        GlobalVar.psd(0) = TextBox5.Text + "MHz"
+                                                        GlobalVar.psd(1) = TextBox6.Text + "MHz"
+                                                        GlobalVar.obe(0) = (Convert.ToDecimal(TextBox5.Text) - 0.5).ToString
+                                                        GlobalVar.obe(1) = (Convert.ToDecimal(TextBox6.Text) + 0.5).ToString
+
+                                                        System.Console.WriteLine("Bottem Channel Offset = " + TextBox8.Text + "dB")
+                                                        System.Console.WriteLine("Middle Channel Offset = " + TextBox9.Text + "dB")
+                                                        System.Console.WriteLine("Top Channel Offset = " + TextBox10.Text + "dB")
+
+                                                        Return True
                                                     Else
-                                                        MsgBox("Please Select Temperatures")
+                                                        MsgBox("Please Enter SaveLocation")
                                                         Return False
                                                     End If
                                                 Else
-                                                    MsgBox("Please Select Protocols")
+                                                    MsgBox("Please Select Temperatures")
                                                     Return False
                                                 End If
                                             Else
-                                                MsgBox("Please Select Tests")
+                                                MsgBox("Please Select Protocols")
                                                 Return False
                                             End If
                                         Else
-                                            MsgBox("Please Enter Top Channel Offset")
+                                            MsgBox("Please Select Tests")
                                             Return False
                                         End If
                                     Else
-                                        MsgBox("Please Enter Middle Channel Offset")
+                                        MsgBox("Please Enter Top Channel Offset")
                                         Return False
                                     End If
                                 Else
-                                    MsgBox("Please Enter Bottem Channel Offset")
+                                    MsgBox("Please Enter Middle Channel Offset")
                                     Return False
                                 End If
+                            Else
+                                MsgBox("Please Enter Bottem Channel Offset")
+                                Return False
+                            End If
                         Else
                             MsgBox("Please Enter Top Band Frequency")
                             Return False
@@ -220,11 +223,11 @@ Public Class Form1
         MsgBox("Test Finished")
         frmProgress.CloseProgress_instanceSafe()
 
-        If Me.InvokeRequired Then
-            Me.Invoke(Sub()
-                          Me.Visible = True
-                      End Sub)
-        End If
+        'If Me.InvokeRequired Then
+        '    Me.Invoke(Sub()
+        '                  Me.Visible = True
+        '              End Sub)
+        'End If
 
         Application.Restart()
     End Sub

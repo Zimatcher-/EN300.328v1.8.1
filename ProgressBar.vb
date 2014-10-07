@@ -66,7 +66,7 @@
         secs = iSpan.Seconds.ToString.PadLeft(2, "0"c).ToString
         Me.Label2.Text = ("Time Elapsed : " + hours + "h, " + mins + "m, " + secs + "s")
         'change progressbar value and text every timer tick.
-        If Not time > Me.ProgressBar1.Value Then
+        If time >= Me.ProgressBar1.Maximum Then
             Me.ProgressBar1.Value = Me.ProgressBar1.Maximum
         Else
             Me.ProgressBar1.Value = time

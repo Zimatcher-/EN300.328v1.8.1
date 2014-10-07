@@ -1,32 +1,31 @@
 ﻿Imports System.Threading
 Imports System.ComponentModel
 Module Tests
-    Dim ProgressBar As ProgressBar
     Sub runPowerSpectralDensity(form As Form1, progressBarForm As ProgressBar)
         preset()
         Dim maxPer As Integer = form.CheckedListBox2.CheckedItems.Count * 3
-        progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 135), "Power Spectral Density")
+        progressBarForm.SetTimer_instanceSafe(True, ((maxPer) * 150), "Power Spectral Density")
         Dim tempLocation As String
         For i = 0 To form.CheckedListBox2.Items.Count - 1 Step 1
             If form.CheckedListBox2.GetItemChecked(i) Then
                 tempLocation = (GlobalVar.location + "EN 300 328 v1.8.1 (WLAN)\" + form.CheckedListBox2.Items(i).ToString + "\Power Spectral Density\")
                 Sharp.setChannel("bottem", form.CheckedListBox2.Items(i).ToString)
                 'MsgBox("Set device to channel frequency " + GlobalVar.freq(0) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                GlobalVar.offset = form.TextBox8.Text + "dB"
-                Threading.Thread.Sleep(1000)
+                Threading.Thread.Sleep(1500)
                 'Threading.Thread.Sleep(10000)
+                GlobalVar.offset = form.TextBox8.Text + "dB"
                 psdReading(GlobalVar.freq(0), form.CheckedListBox2.Items(i).ToString, tempLocation)
                 Sharp.setChannel("middle", form.CheckedListBox2.Items(i).ToString)
                 'MsgBox("Set device to channel frequency " + GlobalVar.freq(1) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                GlobalVar.offset = form.TextBox9.Text + "dB"
-                Threading.Thread.Sleep(1000)
+                Threading.Thread.Sleep(1500)
                 'Threading.Thread.Sleep(10000)
+                GlobalVar.offset = form.TextBox9.Text + "dB"
                 psdReading(GlobalVar.freq(1), form.CheckedListBox2.Items(i).ToString, tempLocation)
                 Sharp.setChannel("top", form.CheckedListBox2.Items(i).ToString)
                 'MsgBox("Set device to channel frequency " + GlobalVar.freq(2) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                GlobalVar.offset = form.TextBox10.Text + "dB"
-                Threading.Thread.Sleep(1000)
+                Threading.Thread.Sleep(1500)
                 'Threading.Thread.Sleep(10000)
+                GlobalVar.offset = form.TextBox10.Text + "dB"
                 psdReading(GlobalVar.freq(2), form.CheckedListBox2.Items(i).ToString, tempLocation)
             End If
         Next
@@ -55,7 +54,7 @@ Module Tests
     Sub runOutBandEmmisions(form As Form1, progressBarForm As ProgressBar)
         preset()
         Dim maxPer As Integer = form.CheckedListBox2.CheckedItems.Count * 160
-        progressBarForm.SetTimer_instanceSafe(True, (((maxPer) * 120) - 5600), "Out Band Emissions")
+        progressBarForm.SetTimer_instanceSafe(True, (((maxPer) * 130)), "Out Band Emissions")
         Dim tempLocation As String = ""
         For i = 0 To form.CheckedListBox2.Items.Count - 1 Step 1
             If form.CheckedListBox2.GetItemChecked(i) Then
@@ -64,11 +63,13 @@ Module Tests
                         For j = 0 To 1 Step 1
                             If j = 0 Then
                                 Sharp.setChannel("bottem", form.CheckedListBox2.Items(i).ToString)
+                                Threading.Thread.Sleep(1000)
                                 'MsgBox("Set device to channel frequency " + GlobalVar.freq(0) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString + " and " + vbNewLine + "set temperture to " + form.CheckedListBox3.Items(y).ToString)
                                 GlobalVar.offset = form.TextBox8.Text + "dB"
                                 tempLocation = (GlobalVar.location + "EN 300 328 v1.8.1 (WLAN)\" + form.CheckedListBox2.Items(i).ToString + "\Out Band Emission\" + form.CheckedListBox3.Items(y).ToString + "\" + "Bottem Channel (" + form.TextBox1.Text + "MHz)\")
                             ElseIf j = 1 Then
                                 Sharp.setChannel("top", form.CheckedListBox2.Items(i).ToString)
+                                Threading.Thread.Sleep(1000)
                                 'MsgBox("Set device to channel frequency " + GlobalVar.freq(2) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString + " and " + vbNewLine + "set temperture to " + form.CheckedListBox3.Items(y).ToString)
                                 GlobalVar.offset = form.TextBox10.Text + "dB"
                                 tempLocation = (GlobalVar.location + "EN 300 328 v1.8.1 (WLAN)\" + form.CheckedListBox2.Items(i).ToString + "\Out Band Emission\" + form.CheckedListBox3.Items(y).ToString + "\" + "Top Channel (" + form.TextBox3.Text + "MHz)\")
@@ -126,16 +127,16 @@ Module Tests
                     If j = 0 Then
                         Sharp.setChannel("bottem", form.CheckedListBox2.Items(i).ToString)
                         'MsgBox("Set device to channel frequency " + GlobalVar.freq(0) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                        GlobalVar.offset = form.TextBox8.Text + "dB"
                         Threading.Thread.Sleep(1000)
                         'Threading.Thread.Sleep(2000)
+                        GlobalVar.offset = form.TextBox8.Text + "dB"
                         obwReading(GlobalVar.freq(0), form.CheckedListBox2.Items(i).ToString, tempLocation)
                     ElseIf j = 1 Then
                         Sharp.setChannel("top", form.CheckedListBox2.Items(i).ToString)
                         'MsgBox("Set device to channel frequency " + GlobalVar.freq(2) + "MHz on protocol " + form.CheckedListBox2.Items(i).ToString)
-                        GlobalVar.offset = form.TextBox10.Text + "dB"
                         Threading.Thread.Sleep(1000)
                         'Threading.Thread.Sleep(2000)
+                        GlobalVar.offset = form.TextBox10.Text + "dB"
                         obwReading(GlobalVar.freq(2), form.CheckedListBox2.Items(i).ToString, tempLocation)
                     End If
 
